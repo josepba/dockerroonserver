@@ -14,10 +14,10 @@ The [Dockerfile](/Dockerfile) installs all dependencies specified in Roon's Know
 
 The approach taken is to ignore Roon's easy installer. After all, we are setting up Roon's environment directly, and all that checking around is not contributing anything (on the contrary, as it may fail for some spurious reason).
 
-Besides the above, during image build, we only download the Roon server package [RoonServer_linuxx64.tar.bz2] (http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2), but do not install it where it has to run. We do so to accomodate Roon's in-place update strategy as follows: in folder [/rooninstall]() we place the Roon Server package
-[RoonServer_linuxx64.tar.bz2] (http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2), as well as script [roon_initial_installer.sh](/roon_initial_installer.sh), which is configured as the entrypoint of the image.
+Besides the above, during image build, we only download the Roon server package [RoonServer_linuxx64.tar.bz2](http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2), but do not install it where it has to run. We do so to accomodate Roon's in-place update strategy as follows: in folder [/rooninstall]() we place the Roon Server package
+[RoonServer_linuxx64.tar.bz2](http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2), as well as script [roon_initial_installer.sh](/roon_initial_installer.sh), which is configured as the entrypoint of the image.
 
-When we launch a container from this image, [roon_initial_installer.sh](/roon_initial_installer.sh) executes and checks if folder [/opt/RoonStuff/RoonServer]() exists. If it does, that means that the Roon server is already available, and does not need to be installed. If not, it installs the version of the Roon server added to the image (in [/rooninstall/RoonServer_linuxx64.tar.bz2] (http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2)) by expanding it cwithin [/opt/RoonStuff](), creating [/opt/RoonStuff/RoonServer]().
+When we launch a container from this image, [roon_initial_installer.sh](/roon_initial_installer.sh) executes and checks if folder [/opt/RoonStuff/RoonServer]() exists. If it does, that means that the Roon server is already available, and does not need to be installed. If not, it installs the version of the Roon server added to the image (in [/rooninstall/RoonServer_linuxx64.tar.bz2](http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2)) by expanding it cwithin [/opt/RoonStuff](), creating [/opt/RoonStuff/RoonServer]().
 
 If Roon self-updates, it will modify the contents within [/opt/RoonStuff/RoonServer](), which will be annoying if, for some reason, the container running Roon is destroyed, as the Roon Server will need to be updated again.
 
